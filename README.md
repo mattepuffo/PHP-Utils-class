@@ -1,2 +1,2 @@
 # PHP-Utils-class
-PHP class with utilities methods..
+PHP class with utilities methods.
