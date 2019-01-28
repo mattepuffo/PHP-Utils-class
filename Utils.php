@@ -3,9 +3,9 @@
 /**
  * Metodi di utilità
  * 
- * @author Mattepuffo
- * @since 2016-04-13
- * @version 2.1
+ * @author Matteo Ferrone
+ * @since 2019-01-28
+ * @version 2.2
  */
 class Utils {
 
@@ -294,6 +294,49 @@ class Utils {
         } else {
             echo "<script type=\"text/javascript\" >\nwindow.opener.location.reload(true);window.self.close()\n</script>\n";
         }
+    }
+
+    /**
+     * Converte un array in XML
+     * 
+     * ESEMPIO:
+     * $xml = new SimpleXMLElement('<root/>');
+     * arrayToXml($array, $xml);
+     * $xml->asXML($nomeFile);
+     * 
+     * @param array $array
+     * @param xml object $xml
+     * @since 2.2
+     */
+    public function arrayToXml($array, &$xml) {
+        foreach ($array as $key => $value) {
+            if (is_array($value)) {
+                if (!is_numeric($key)) {
+                    $subnode = $xml->addChild("$key");
+                    arrayToXml($value, $subnode);
+                } else {
+                    $subnode = $xml->addChild("item$key");
+                    arrayToXml($value, $subnode);
+                }
+            } else {
+                $xml->addChild("$key", htmlspecialchars("$value"));
+            }
+        }
+    }
+
+    /**
+     * Converte un array in CSV
+     * 
+     * @param array $array
+     * @param string $csvFile
+     * @since 2.2
+     */
+    public function arrayToCsv($array, $csvFile) {
+        $f = fopen($csvFile, 'w');
+        foreach ($array as $row) {
+            fputcsv($f, $row, ';');
+        }
+        fclose($f);
     }
 
 }
