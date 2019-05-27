@@ -2,16 +2,16 @@
 
 /**
  * Metodi di utilità
- * 
+ *
  * @author Matteo Ferrone
- * @since 2019-01-28
- * @version 2.2
+ * @since 2019-05-27
+ * @version 2.3
  */
-class Utils {
+class MPUtils {
 
     /**
      * Ripulisce la stringa
-     * 
+     *
      * @param string $name Stringa da ripulire
      * @return string La stringa ripulita
      */
@@ -23,7 +23,7 @@ class Utils {
 
     /**
      * Riporta la stringa in versione "human"
-     * 
+     *
      * @param string $name Stringa da "ricostruire"
      * @return string Stringa "ricostruita"
      */
@@ -35,7 +35,7 @@ class Utils {
 
     /**
      * Leva alcune parole dal testo
-     * 
+     *
      * @param string $testo Testo da ripulire
      * @return string Testo ripulito
      */
@@ -48,7 +48,7 @@ class Utils {
 
     /**
      * Tronca il testo
-     * 
+     *
      * @param string $testo Testo da ripulire
      * @param int $caratteri Caratteri a cui troncare il testo
      * @return string Testo troncato
@@ -68,7 +68,7 @@ class Utils {
 
     /**
      * Riempie un file
-     * 
+     *
      * @param string $file File da scrivere
      * @param string $message Messaggio da scrivere
      */
@@ -80,7 +80,7 @@ class Utils {
 
     /**
      * Controlla validità struttura email
-     * 
+     *
      * @param string $email Email da controllare
      * @return boolean TRUE o FALSE a seconda che l'email sia valida o meno
      */
@@ -104,7 +104,7 @@ class Utils {
 
     /**
      * Elabora il number format
-     * 
+     *
      * @deprecated since version number 2.0
      * @param int $number Numero da formattare
      * @param int $decimals Numero di decimali
@@ -121,7 +121,7 @@ class Utils {
 
     /**
      * Lista di anni
-     * 
+     *
      * @param int $annoStart Anno di inizio
      * @param int $annoEnd Anno di fine
      * @return array Lista di anni
@@ -137,7 +137,7 @@ class Utils {
 
     /**
      * Parsing di XML in formato JSON
-     * 
+     *
      * @param stirng $file File da parsare
      * @return string Stringa JSON
      */
@@ -152,7 +152,7 @@ class Utils {
 
     /**
      * Compara le classi passate come parametri
-     * 
+     *
      * @param class $objA
      * @param class $objB
      * @return mixed
@@ -163,7 +163,7 @@ class Utils {
 
     /**
      * Converte le new line nel tag br
-     * 
+     *
      * @param string $text Testo da modificare
      * @return string Testo modificato
      */
@@ -186,7 +186,7 @@ class Utils {
 
     /**
      * Converte una pagina HTML in puro testo
-     * 
+     *
      * @param string $string Testo HTML
      * @return string Testo convertito
      */
@@ -235,7 +235,7 @@ class Utils {
 
     /**
      * Controlla se l'encoding è UTF-8
-     * 
+     *
      * @param string $text Testo da controllare
      * @return string Il tipo di encoding
      */
@@ -246,7 +246,7 @@ class Utils {
 
     /**
      * Tenta di chiudere tutti i tag HTML non chiusi
-     * 
+     *
      * @param string $unclosedString Testo HTML da controllare
      * @return string Testo modificato
      */
@@ -263,7 +263,7 @@ class Utils {
 
     /**
      * Restituisce l'importo più l'iva
-     * 
+     *
      * @param double $amount Import
      * @param float $vatPercent Percentuale di IVA
      * @return double Importo + IVA
@@ -274,7 +274,7 @@ class Utils {
 
     /**
      * Restituisce il valore percentuale per l'iva
-     * 
+     *
      * @param double $amount Import
      * @param float $vatPercent IVA
      * @return double Percentuale
@@ -285,7 +285,7 @@ class Utils {
 
     /**
      * Usando Javascript, chiude la finestra corrente, ed eventualmente la riapre
-     * 
+     *
      * @param boolean $reloadOpener Se deve riaprire la finestra
      */
     public function windowClose($reloadOpener = false) {
@@ -298,12 +298,12 @@ class Utils {
 
     /**
      * Converte un array in XML
-     * 
+     *
      * ESEMPIO:
      * $xml = new SimpleXMLElement('<root/>');
      * arrayToXml($array, $xml);
      * $xml->asXML($nomeFile);
-     * 
+     *
      * @param array $array
      * @param xml object $xml
      * @since 2.2
@@ -326,7 +326,7 @@ class Utils {
 
     /**
      * Converte un array in CSV
-     * 
+     *
      * @param array $array
      * @param string $csvFile
      * @since 2.2
@@ -337,6 +337,21 @@ class Utils {
             fputcsv($f, $row, ';');
         }
         fclose($f);
+    }
+
+    /**
+     * Genera un colore random
+     *
+     * @return string
+     * @since 2.3
+     */
+    function generateColor() {
+        mt_srand((double) microtime() * 1000000);
+        $colorCode = '';
+        while (strlen($colorCode) < 6) {
+            $colorCode .= sprintf("%02X", mt_rand(0, 255));
+        }
+        return '#' . $colorCode;
     }
 
 }
