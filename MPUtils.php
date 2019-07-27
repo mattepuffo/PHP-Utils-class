@@ -4,8 +4,8 @@
  * Metodi di utilità
  *
  * @author Matteo Ferrone
- * @since 2019-05-27
- * @version 2.3
+ * @since 2019-07-27
+ * @version 2.4
  */
 class MPUtils {
 
@@ -105,15 +105,15 @@ class MPUtils {
     /**
      * Elabora il number format
      *
-     * @deprecated since version number 2.0
      * @param int $number Numero da formattare
      * @param int $decimals Numero di decimali
      * @param string $decimalPoint Punteggiatura decimali
      * @param string $thousandPoint Punteggiatura migliaia
      * @return int Numero formattato
+     * @deprecated since version number 2.0
      */
     public function truncateNumberFormat($number, $decimals = 2, $decimalPoint = ',', $thousandPoint = '.') {
-        if (($number * pow(10, $decimals + 1) % 10 ) == 5) {
+        if (($number * pow(10, $decimals + 1) % 10) == 5) {
             $number -= pow(10, -($decimals + 1));
         }
         return number_format($number, $decimals, $decimalPoint, $thousandPoint);
@@ -181,7 +181,7 @@ class MPUtils {
      * @return float
      */
     public function getProportionValue($a, $b, $c) {
-        return (float) ((float) ($b * $c) / $a);
+        return (float)((float)($b * $c) / $a);
     }
 
     /**
@@ -262,17 +262,6 @@ class MPUtils {
     }
 
     /**
-     * Restituisce l'importo più l'iva
-     *
-     * @param double $amount Import
-     * @param float $vatPercent Percentuale di IVA
-     * @return double Importo + IVA
-     */
-    public function vatGetAmount($amount, $vatPercent = 22) {
-        return (double) ($amount + (getTaxValue($amount, $vatPercent)));
-    }
-
-    /**
      * Restituisce il valore percentuale per l'iva
      *
      * @param double $amount Import
@@ -345,8 +334,8 @@ class MPUtils {
      * @return string
      * @since 2.3
      */
-    function generateColor() {
-        mt_srand((double) microtime() * 1000000);
+    public function generateColor() {
+        mt_srand((double)microtime() * 1000000);
         $colorCode = '';
         while (strlen($colorCode) < 6) {
             $colorCode .= sprintf("%02X", mt_rand(0, 255));
@@ -354,4 +343,36 @@ class MPUtils {
         return '#' . $colorCode;
     }
 
+    /**
+     * Calcola il numero di giorni in un anno
+     *
+     * @param $year
+     * @return int
+     */
+    public function daysInYear($year) {
+        $days = 0;
+        for ($month = 1; $month <= 12; $month++) {
+            $days = $days + cal_days_in_month(CAL_GREGORIAN, $month, $year);
+        }
+        return $days;
+    }
+
+    /**
+     * Calcola la differenza in giorni tra due date
+     *
+     * Esempio:
+     * echo $mpUtils->diffDateInDays("2019-01-01", date('Y-m-d'));
+     * echo $mpUtils->diffDateInDays('first day of january', date('Y-m-d'));
+     *
+     * @param $date1
+     * @param $date2
+     * @return bool|DateInterval
+     * @throws Exception
+     */
+    public function diffDateInDays($date1, $date2) {
+        $d1 = new DateTime($date1);
+        $d2 = new DateTime($date2);
+        $diff = $d1->diff($d2);
+        return $diff->format('%r%a');
+    }
 }
