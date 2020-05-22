@@ -5,7 +5,7 @@
  *
  * @author Matteo Ferrone
  * @since 2019-07-27
- * @version 2.4
+ * @version 2.5
  */
 class MPUtils {
 
@@ -374,5 +374,31 @@ class MPUtils {
         $d2 = new DateTime($date2);
         $diff = $d1->diff($d2);
         return $diff->format('%r%a');
+    }
+
+    /**
+     * Visualizza tutti i giorni di un mese
+     *
+     * @param $year
+     * @param $month
+     * @param string $day
+     * @return array
+     * @throws Exception
+     * @since 2.5
+     */
+    function getDaysInMonth($year, $month, $day = 'Monday') {
+
+        $strDate = 'first ' . $day . ' of ' . $year . '-' . $month;
+
+        $startDay = new \DateTime($strDate);
+
+        $days = array();
+
+        while ($startDay->format('Y-m') <= $year . '-' . str_pad($month, 2, 0, STR_PAD_LEFT)) {
+            $days[] = clone($startDay);
+            $startDay->modify('+ 7 days');
+        }
+
+        return $days;
     }
 }
