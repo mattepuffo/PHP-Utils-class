@@ -4,8 +4,8 @@
  * Metodi di utilità
  *
  * @author Matteo Ferrone
- * @since 2019-07-27
- * @version 2.5
+ * @since 2020-06-30
+ * @version 2.6
  */
 class MPUtils {
 
@@ -262,11 +262,9 @@ class MPUtils {
     }
 
     /**
-     * Restituisce il valore percentuale per l'iva
-     *
-     * @param double $amount Import
-     * @param float $vatPercent IVA
-     * @return double Percentuale
+     * @param $amount
+     * @param int $vatPercent
+     * @return float|int
      */
     public function vatGetValue($amount, $vatPercent = 22) {
         return ($amount * $vatPercent) / 100;
@@ -326,6 +324,24 @@ class MPUtils {
             fputcsv($f, $row, ';');
         }
         fclose($f);
+    }
+
+    /**
+     * Crea un file csv e lo metto in download
+     * 
+     * @param $array
+     * @param string $filename
+     * @param string $delimiter
+     */
+    function downloadCsv($array, $filename = "export.csv", $delimiter = ";") {
+        $f = fopen('php://memory', 'w');
+        foreach ($array as $line) {
+            fputcsv($f, $line, $delimiter);
+        }
+        fseek($f, 0);
+        header('Content-Type: application/csv');
+        header('Content-Disposition: attachment; filename="' . $filename . '";');
+        fpassthru($f);
     }
 
     /**
