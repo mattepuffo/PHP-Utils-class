@@ -4,8 +4,8 @@
  * Metodi di utilità
  *
  * @author Matteo Ferrone
- * @since 2020-06-30
- * @version 2.6
+ * @since 2020-07-07
+ * @version 2.7
  */
 class MPUtils {
 
@@ -328,7 +328,7 @@ class MPUtils {
 
     /**
      * Crea un file csv e lo metto in download
-     * 
+     *
      * @param $array
      * @param string $filename
      * @param string $delimiter
@@ -416,5 +416,26 @@ class MPUtils {
         }
 
         return $days;
+    }
+
+    /**
+     * @param $imgToCopy
+     * @param $dir
+     * @param $nomeFile
+     * @param $text
+     * @param string $color
+     * @param int $fontSize
+     * @param string $imageFormat
+     * @throws ImagickException
+     */
+    function duplicaConWatermark($imgToCopy, $dir, $nomeFile, $text, $color = 'black', $fontSize = 20, $imageFormat = 'png') {
+        $image = new Imagick($imgToCopy);
+        $draw = new ImagickDraw();
+        $draw->setFontSize($fontSize);
+        $draw->setFillColor($color);
+        $draw->setGravity(Imagick::GRAVITY_CENTER);
+        $image->annotateImage($draw, 100, 12, 0, $text);
+        $image->setImageFormat($imageFormat);
+        $image->writeImage($dir . $nomeFile . '.' . $imageFormat);
     }
 }
