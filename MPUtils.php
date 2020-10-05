@@ -4,8 +4,8 @@
  * Metodi di utilità
  *
  * @author Matteo Ferrone
- * @since 2020-09-30
- * @version 2.7.1
+ * @since 2020-10-05
+ * @version 2.7.2
  */
 class MPUtils {
 
@@ -371,6 +371,29 @@ class MPUtils {
             $days = $days + cal_days_in_month(CAL_GREGORIAN, $month, $year);
         }
         return $days;
+    }
+
+    /**
+     * @param $monthNumber
+     * @return string
+     * @since 2.7.2
+     */
+    public function getMonthName($monthNumber) {
+        $arrayMonths = array(
+            1 => 'Gennaio',
+            2 => 'Febbraio',
+            3 => 'Marzo',
+            4 => 'Aprile',
+            5 => 'Maggio',
+            6 => 'Giugno',
+            7 => 'Luglio',
+            8 => 'Agosto',
+            9 => 'Settembre',
+            10 => 'Ottobre',
+            11 => 'Novembre',
+            12 => 'Dicembre'
+        );
+        return $arrayMonths[$monthNumber];
     }
 
     /**
