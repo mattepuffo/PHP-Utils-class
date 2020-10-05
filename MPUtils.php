@@ -4,8 +4,8 @@
  * Metodi di utilità
  *
  * @author Matteo Ferrone
- * @since 2020-07-07
- * @version 2.7
+ * @since 2020-09-30
+ * @version 2.7.1
  */
 class MPUtils {
 
@@ -16,8 +16,8 @@ class MPUtils {
      * @return string La stringa ripulita
      */
     public function sanitizeName($name) {
-        $cerca = array("à", "è", "é", "ì", "ò", "ù", "'", "?", " ", "__");
-        $sostituisci = array("a", "e", "e", "i", "o", "u", "-", "-", "-", "-");
+        $cerca = array("à", "è", "é", "ì", "ò", "ù", "'", "?", " ", "__", "&");
+        $sostituisci = array("a", "e", "e", "i", "o", "u", "-", "-", "-", "-", "e");
         return str_replace($cerca, $sostituisci, trim(strtolower($name)));
     }
 
