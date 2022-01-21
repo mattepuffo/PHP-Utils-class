@@ -4,8 +4,8 @@
  * Metodi di utilità
  *
  * @author Matteo Ferrone
- * @since 2021-07-15
- * @version 2.7.7
+ * @since 2022-01-21
+ * @version 2.7.8
  */
 class MPUtils {
 
@@ -416,13 +416,11 @@ class MPUtils {
     }
 
     /**
-     * Visualizza tutti i giorni di un mese
-     *
      * @param $year
      * @param $month
-     * @param string $day
+     * @param $day
      * @return array
-     * @throws Exception
+     * @throws \Exception
      * @since 2.5
      */
     function getDaysInMonth($year, $month, $day = 'Monday') {
@@ -449,7 +447,6 @@ class MPUtils {
      * @param string $color
      * @param int $fontSize
      * @param string $imageFormat
-     * @throws ImagickException
      */
     function duplicaConWatermark($imgToCopy, $dir, $nomeFile, $text, $color = 'black', $fontSize = 20, $imageFormat = 'png') {
         $image = new Imagick($imgToCopy);
@@ -460,5 +457,68 @@ class MPUtils {
         $image->annotateImage($draw, 100, 12, 0, $text);
         $image->setImageFormat($imageFormat);
         $image->writeImage($dir . $nomeFile . '.' . $imageFormat);
+    }
+
+    /**
+     * @param $valore
+     * @return float|int|mixed
+     * @since 2.7.8
+     */
+    public function checkDigit($valore) {
+        $codiceControllo = 0;
+        $calcolaValore = 0;
+        $ultimaCifra = 0;
+        $multiploSuperiore = 0;
+
+        $codice = str_replace('-', '', $valore);
+
+        $indice = 1;
+        foreach (str_split(strrev($codice)) as $n) {
+            if ($indice % 2 == 0) {
+                $calcolaValore += $n;
+            } else {
+                $calcolaValore += ($n * 3);
+            }
+            $indice++;
+        }
+
+        $ultimaCifra = substr($calcolaValore, -1);
+
+        switch ($ultimaCifra) {
+            case 0:
+                $multiploSuperiore = $calcolaValore;
+                break;
+            case 1:
+                $multiploSuperiore = $calcolaValore + 9;
+                break;
+            case 2:
+                $multiploSuperiore = $calcolaValore + 8;
+                break;
+            case 3:
+                $multiploSuperiore = $calcolaValore + 7;
+                break;
+            case 4:
+                $multiploSuperiore = $calcolaValore + 6;
+                break;
+            case 5:
+                $multiploSuperiore = $calcolaValore + 5;
+                break;
+            case 6:
+                $multiploSuperiore = $calcolaValore + 4;
+                break;
+            case 7:
+                $multiploSuperiore = $calcolaValore + 3;
+                break;
+            case 8:
+                $multiploSuperiore = $calcolaValore + 2;
+                break;
+            case 9:
+                $multiploSuperiore = $calcolaValore + 1;
+                break;
+        }
+
+        $codiceControllo = $multiploSuperiore - $calcolaValore;
+
+        return $codiceControllo;
     }
 }
